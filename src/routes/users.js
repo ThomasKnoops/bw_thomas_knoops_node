@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { Op } = require('sequelize');
 
 // Create a new user
 router.post('/users', async (req, res) => {
@@ -25,7 +26,31 @@ router.post('/users', async (req, res) => {
 // Get all users
 router.get('/users', async (req, res) => {
   try {
-    const users = await req.models.User.findAll();
+    let { id, name, email, birthday, bio, is_admin, limit = 0, offset = 0 } = req.query;
+    let users;
+    limit = parseInt(limit);
+    offset = parseInt(offset);
+    
+    const whereClause = {};
+    if (id) whereClause.id = id;
+    if (name) whereClause.name = name;
+    if (email) whereClause.email = email;
+    if (birthday) whereClause.birthday = { [Op.eq]: new Date(birthday) };
+    if (bio) whereClause.bio = bio;
+    if (is_admin !== undefined) whereClause.is_admin = is_admin;
+
+    if (limit <= 0 && offset <= 0) {
+        users = await req.models.User.findAll({
+          where: whereClause,
+        });
+    } else {
+        users = await req.models.User.findAll({
+          where: whereClause,
+          limit: limit,
+          offset: offset,
+        });
+    }
+
     return res.status(200).json(users);
   } catch (error) {
     console.error(error);
