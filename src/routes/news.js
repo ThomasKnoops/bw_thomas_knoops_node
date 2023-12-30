@@ -44,7 +44,6 @@ router.get('/news/:id', async (req, res) => {
 // Update a news post by ID
 router.put('/news/:id', async (req, res) => {
   const { id } = req.params;
-  console.log('Request Body:', req.body); // Log the request body
 
   try {
     const news = await req.models.News.findByPk(id);
