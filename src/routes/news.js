@@ -15,7 +15,15 @@ router.post('/news', async (req, res) => {
 // Get all news posts
 router.get('/news', async (req, res) => {
   try {
-    const allNews = await req.models.News.findAll();
+    let { limit = 0, offset = 0 } = req.query;
+    limit = parseInt(limit);
+    offset = parseInt(offset);
+    let allNews;
+    if (limit <= 0 && offset <= 0) {
+      allNews = await req.models.News.findAll();
+    } else {
+      allNews = await req.models.News.findAll({ limit: limit, offset: offset });
+    }
     return res.status(200).json(allNews);
   } catch (error) {
     console.error(error);
