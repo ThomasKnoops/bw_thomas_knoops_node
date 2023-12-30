@@ -15,7 +15,15 @@ router.post('/follows', async (req, res) => {
 // Get all follows
 router.get('/follows', async (req, res) => {
   try {
-    const follows = await req.models.Follow.findAll();
+    let { limit = 0, offset = 0 } = req.query;
+    limit = parseInt(limit);
+    offset = parseInt(offset);
+    let follows;
+    if (limit <= 0 && offset <= 0) {
+      follows = await req.models.Follow.findAll();
+    } else {
+      follows = await req.models.Follow.findAll({ limit: limit, offset: offset });
+    }
     return res.status(200).json(follows);
   } catch (error) {
     console.error(error);

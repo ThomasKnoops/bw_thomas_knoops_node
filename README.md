@@ -7,5 +7,5 @@ This is a node api server made for my course backend web at Erasmus Hogeschool B
 - CRUD for news
 - CRUD for users
 - CRD for follows + get all followers/followings of a user
-
 - limit and offset search for news
+- limit and offset search for follows
