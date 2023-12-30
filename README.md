@@ -1,6 +1,7 @@
 # Backend Web - Node API
 
 This is a node api server made for my course backend web at Erasmus Hogeschool Brussels
+https://github.com/ThomasKnoops/bw_thomas_knoops_node
 
 ## Functions
 
