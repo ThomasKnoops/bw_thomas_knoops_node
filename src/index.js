@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
 const newsRoute = require('./routes/news');
 const userRoute = require('./routes/users');
+const followRoute = require('./routes/follows');
 const config = require('../config/config');
 
 // Create an Express application
@@ -26,6 +27,7 @@ const sequelize = new Sequelize(config.development);
 const models = {
   News: require('./models/news')(sequelize),
   User: require('./models/users')(sequelize),
+  Follow: require('./models/follows')(sequelize),
 };
 
 // Sync database
@@ -40,5 +42,6 @@ app.use((req, res, next) => {
 // Use the routes and Start server
 app.use(newsRoute);
 app.use(userRoute);
+app.use(followRoute);
 app.use(express.static('public'));
 app.listen(PORT, () => console.info(`Server started on http://localhost:${PORT}`));
