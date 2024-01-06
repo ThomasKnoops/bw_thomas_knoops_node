@@ -1,5 +1,3 @@
-'use strict';
-
 // Imports
 const express = require('express');
 const bodyParser = require('body-parser');
